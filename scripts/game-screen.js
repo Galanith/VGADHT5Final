@@ -8,4 +8,6 @@ kogeki.screens["game-screen"] = (function() {
 		kogeki.dom.addClass(canvas, "playArea");
 	}
 
+
+
 }
