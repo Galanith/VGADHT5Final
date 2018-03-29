@@ -4,13 +4,11 @@ kogeki.screens["How-To"] = (function() {
 	
 	
 	function setup() {
-		kogeki.dom.bind("#main-menu", "click", function() {
-			kogeki.showScreen("How-To");
-			
-		kogeki.dom.bind("#How-To", "click", function() {
+		
+		kogeki.dom.bind("#How-To .back", "click", function() {
 			kogeki.showScreen("main-menu");
-			});
 		});
+		
 	}
 	
 	function run () {

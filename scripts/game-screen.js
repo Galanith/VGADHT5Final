@@ -1,21 +1,22 @@
 kogeki.screens["game-screen"] = (function() {
 	var paused, blockSpeed,
 		speedModifier = 1, blocks = [],
-		firstRun = true;
+		firstRun = true,
+		rect;
 		
 	function startGame() {
-		var $ = jewel.dom.$,
+		var $ = kogeki.dom.$,
 		playArea = $("#game-screen .play-area")[0];
 		
 		canvas = document.createElement("canvas");
 		ctx = canvas.getContext('2d');
 		kogeki.dom.addClass(canvas, "playArea");
 		
-		var rect = playArea.getBoundingClientRect();
+		rect = playArea.getBoundingClientRect();
 		canvas.width = rect.width;
 		canvas.height = rect.height;
 		
-		playArea.appendChild(CreateBackground());
+		playArea.appendChild(createBackground());
 		playArea.appendChild(canvas);
 	}
 	
@@ -35,7 +36,7 @@ kogeki.screens["game-screen"] = (function() {
 		for(i = 0; i < generateRandom(20, 50); i++) {
 			var x = generateRandom(0, rect.width),
 				y = generateRandom(0, rect.height);
-			ctx.fillRect(x, y, 1, 1);
+			ctx.fillRect(x, y, 5, 5);
 		}
 		return background;
 	}
@@ -51,4 +52,8 @@ kogeki.screens["game-screen"] = (function() {
 		}
 		startGame();
 	}
-}
+	
+	return {
+		run : run
+	};
+}) ();
