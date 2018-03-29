@@ -7,7 +7,9 @@ kogeki.screens["main-menu"] = (function() {
 				if (e.target.nodeName.toLowerCase() === "button") {
 					var action = e.target.getAttribute("name");
 					kogeki.showScreen(action);
+					console.log(action);
 				}
+			
 				
 			});
 		

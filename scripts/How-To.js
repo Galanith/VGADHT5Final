@@ -4,8 +4,12 @@ kogeki.screens["How-To"] = (function() {
 	
 	
 	function setup() {
-		kogeki.dom.bind("#main-menu ul.menu", "click", function() {
+		kogeki.dom.bind("#main-menu", "click", function() {
 			kogeki.showScreen("How-To");
+			
+		kogeki.dom.bind("#How-To", "click", function() {
+			kogeki.showScreen("main-menu");
+			});
 		});
 	}
 	
@@ -16,5 +20,9 @@ kogeki.screens["How-To"] = (function() {
 		}
 		
 	}
+	
+	return {
+		run:run
+	};
 	
 }) ();
