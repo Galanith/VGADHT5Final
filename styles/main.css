@@ -61,15 +61,15 @@ body {
 }
 
 .logo {
-	font-family: Diagon;
+	font-family: Letterblocks;
 	font-size: 60px;
 	line-height: 60px;
 	margin: 0;
 	text-align: center;
-	text-shadow: 1px 1px 2px rgb(255,255,0),
-				-1px -1px 2px rgb(255,255,0),
+	text-shadow: 1px 1px 3px rgb(200,255,200),
+				-1px -1px 3px rgb(200,255,200),
 				5px 8px 8px rgb(0,0,0);
-	color: rgb(255,0,0);
+	color: rgb(150,150,255);
 	
 }
 
