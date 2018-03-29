@@ -43,6 +43,17 @@ body {
 	font-size: 30px;
 }
 
+#How-To {
+	text-align: center;
+	padding-top:20px;
+	
+}
+
+.back{
+	font-family:Diagon;
+	font-size:0.6em;
+}
+
 .progress {
 	margin : 0 auto;
 	width: 6em;
