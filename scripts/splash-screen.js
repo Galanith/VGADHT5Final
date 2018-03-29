@@ -15,7 +15,7 @@ kogeki.screens["splash-screen"] = (function() {
 	}
 	function setup() {
 		kogeki.dom.bind("#splash-screen", "click", function() {
-			jewel.showScreen("main-menu");
+			kogeki.showScreen("main-menu");
 		});
 	}
 	

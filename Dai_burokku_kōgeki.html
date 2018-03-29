@@ -9,10 +9,11 @@
 		<script src="scripts/kogeki.js"></script>
 		<script>
 			window.addEventListener("load", function() {
-				kogeki.load("scripts/dom.js"),
-				kogeki.load("scripts/splash-screen.js"),
-				kogeki.load("scripts/main-menu.js"),
-				kogeki.load("scripts/game-screen.js")
+				kogeki.load("scripts/dom.js");
+				kogeki.load("scripts/splash-screen.js");
+				kogeki.load("scripts/main-menu.js", kogeki.setup);
+			
+				//kogeki.load("scripts/game-screen.js")
 			});
 		
 		</script>
