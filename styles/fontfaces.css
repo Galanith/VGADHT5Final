@@ -1,0 +1,15 @@
+@font-face{
+	font-family: "BLOCKUP";
+	font-weight: normal;
+	font-style: normal;
+	src:url("../fonts.BLOCKUP.tff" format("truetype");
+		
+}
+
+@font-face{
+	font-family: "Diagon";
+	font-weight: normal;
+	font-style: normal;
+	src: url("../fonts/Diagon.otf") format("opentype");
+	
+}
