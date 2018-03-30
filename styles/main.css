@@ -50,14 +50,24 @@ body {
 }
 
 #How-To p {
-	font-family: Letterblocks;
-	font-size: 0.3em;
+	font-family: Diagon;
+	font-size: 0.4em;
 	color: rgb(128,128,128);
 }
 
 .back{
 	font-family:Diagon;
 	font-size:0.6em;
+	border: 1px solid rgb(200,200,100);
+}
+
+.back:hover{
+	background: rgb(45,45,15);
+}
+
+.back:active {
+	color: rgb(255,255,0);
+	background: rgb(30,40,0);
 }
 
 .progress {
