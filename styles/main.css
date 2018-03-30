@@ -90,6 +90,29 @@ body {
 	
 }
 
+#game-screen .play-area {
+	position: relative;
+	width: 100%;
+	height: 100%;
+	
+}
+
+#game-screen .play-area .background,
+#game-screen .play-area .playArea {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+}
+
+#game-screen .play-area .playArea {
+	z-index: 10;
+}
+
+#game-screen .play-area .background {
+	z-index: 0;
+}
 
 ul.menu {
 	text-align: center;
