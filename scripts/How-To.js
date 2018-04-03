@@ -7,6 +7,8 @@ kogeki.screens["How-To"] = (function() {
 		
 		kogeki.dom.bind("#How-To .back", "click", function() {
 			kogeki.showScreen("main-menu");
+			
+		
 		});
 		
 	}
