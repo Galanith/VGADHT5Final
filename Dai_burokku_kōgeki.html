@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="eng-US">
+	<head>
+		<meta charset="UTF-8">
+		<title>Dai burokku kōgeki</title>
+		
+		<link rel="stylesheet" href="styles/fontfaces.css" />
+		<link rel="stylesheet" href="styles/main.css" />
+		<script src="scripts/kogeki.js"></script>
+		<script>
+			window.addEventListener("load", function() {
+				kogeki.load("scripts/dom.js");
+				kogeki.load("scripts/splash-screen.js");
+				kogeki.load("scripts/main-menu.js");
+				kogeki.load("scripts/How-To.js", kogeki.setup);
+			
+				kogeki.load("scripts/game-screen.js");
+			});
+		
+		</script>
+	</head>
+	<body>
+		<div id="game">
+			<div class="screen" id="splash-screen">
+				<h1 class="logo">Dai<br> Burokku<br>Kogeki</h1>
+				<span class="continue">Click To Continue</span>		
+				<div class="progress">
+					<div class="indicator"></div>
+				</div>
+				
+				
+			</div>
+			<div class="screen" id="main-menu">
+				<h2 class="logo">Dai<br> Burokku<br> Kogeki</h2>
+				<ul class="menu">
+					<li><button name="game-screen">PLAY</button></li>
+					<li><button name="How-To">How To Play</button></li>
+					<li><button name="exit-screen">Quit</button></li>
+				</ul>
+			</div>
+			<div class="screen" id="How-To">
+				<header>
+				<h3>HOW TO PLAY</h3>
+				<br>
+				
+				<!--<img src="images/whateverpictureweget.jpg" width="200" height="100" alt="blockian.jpg"/>   -->
+				<p> These are the Blockians you need to destroy them before they invade Earth!</p>
+				<br>
+				<!-- < img src="images/powerups.jpg" width="200" height="100" alt="powerups.jpg" /> -->
+				<p>These are your power-ups to help you in your fight against the Blockians</p>
+				<br>
+				<p>To kill these nasty beings you have to touch them to destroy them </p>
+				</header>
+				<footer>
+				<button class="back"> Back</button>
+				</footer>
+			</div>
+			<div class="screen" id="game-screen">
+				<div class="play-area">
+				</div>
+			</div>
+		</div>
+	</body>
+	
+</html>
