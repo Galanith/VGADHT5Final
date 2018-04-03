@@ -61,6 +61,10 @@ body {
 	color: rgb(128,128,128);
 }
 
+#How-To .HTI {
+	border-radius: 0.5em;
+}
+
 .back{
 	text-align: center;
 	font-family:Diagon;
