@@ -113,7 +113,7 @@ kogeki.screens["game-screen"] = (function() {
 				changeTime: generateRandom(2, 15),
 				xSize: 1,
 				ySize: 1
-			}
+			} 
 		return star;
 	}
 	
