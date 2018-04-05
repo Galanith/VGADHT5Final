@@ -24,6 +24,7 @@ body {
 	
 }
 
+
 #game .screen{
 	position: absolute;
 	width: 100%;
@@ -60,6 +61,41 @@ body {
 	font-size: 0.4em;
 	color: rgb(128,128,128);
 }
+
+#How-To img {
+	-moz-box-shadow:10px -10px 10px #4000ff;
+	-webkit-box-shadow: 10px -10px 10px #4000ff;
+	box-shadow: 10px -10px 10px #4000ff;
+}
+
+/*#Game-over {
+	font-family:Diagon;
+	background-color: rgb(0,0,0);
+	background-size: 100% 100%;
+	background-image: url(../images/gameOver.jpg);
+}*/
+
+#How-To p {
+	font-family: Diagon;
+	font-size: 0.4em;
+	color: rgb(128,128,128);
+}
+
+/*.main-menu {
+	text-align: center;
+	font-family:Letterblocks;
+	font-size:0.6em;
+	border:1px solid rgb(200,200,100);
+}
+
+.main-menu: hover{
+	background: rgb(45,45,15)
+}
+
+.main-menu:active {
+	color: rgb(255,255,0);
+	background: rgb(30,40,0);
+}*/
 
 .back{
 	text-align: center;
