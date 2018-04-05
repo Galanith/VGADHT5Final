@@ -2,9 +2,17 @@ kogeki.screens["game-screen"] = (function() {
 	var paused, blockSpeed,
 		speedModifier = 1, blocks = [],
 		firstRun = true,
-		rect, stars= [];
+		rect, stars= [], startTime,
+		numBlocks, spawnTimer,
+		lastBlock, timeModifier = 1,
+		blocksCap;
 		
 	function startGame() {
+		startTime = Date.now();
+		numBlocks = 10;
+		blocksCap = 10;
+		spawnTimer = 700;
+		lastBlock = Date.now();
 		var $ = kogeki.dom.$,
 		playArea = $("#game-screen .play-area")[0];
 		
@@ -13,7 +21,6 @@ kogeki.screens["game-screen"] = (function() {
 		kogeki.dom.addClass(canvas, "playArea");
 		
 		rect = playArea.getBoundingClientRect();
-		console.log(rect.width + ", " + rect.height);
 		canvas.width = rect.width;
 		canvas.height = rect.height;
 		
@@ -21,7 +28,6 @@ kogeki.screens["game-screen"] = (function() {
 			stars.push(generateStar());
 		}
 		
-		playArea.appendChild(createBackground());
 		playArea.appendChild(canvas);
 		requestAnimationFrame(updateAll);
 	}
@@ -31,18 +37,35 @@ kogeki.screens["game-screen"] = (function() {
 	}
 
 	function updateAll() {
+		timeModifier = 1 + ((Date.now() - startTime) / 50000); 
+		blocksCap = 10 + ((Date.now() - startTime) / 10000);
 		for(var i = 0; i < stars.length; i++) {
 			star = stars[i];
-			//console.log("Time started: " + star.timeStart);
-			//console.log("Time Elapsed: " + Date.now() - star.timeStart + "  Time total: " + star.timeTotal);
 			if(Date.now() - star.timeStart >= star.timeTotal) {
 				stars.splice(i, 1);
 				stars.push(generateStar());
 			}
 		}
+		
+		for(i = 0; i < blocks.length; i++) {
+			if(blocks[i].y > rect.height) {
+				blocks.splice(i, 1);
+			}
+		}
+		
+		if(Date.now() - lastBlock >= spawnTimer && numBlocks < blocksCap) {
+			if(spawnTimer > 200) {
+				spawnTimer -= 2;
+			}
+			lastBlock = Date.now();
+			blocks.push(generateBlock());
+			console.log(spawnTimer);
+		}
+		
 		ctx.fillStyle = "rgb(0, 0, 0)";
 		ctx.fillRect(0, 0, rect.width, rect.height);
 		ctx.fillStyle = "rgb(250, 255, 200)";
+		
 		stars.forEach(function(e) {
 			if(e.changeCount >= e.changeTime) {
 				e.changeCount = 0;
@@ -53,24 +76,14 @@ kogeki.screens["game-screen"] = (function() {
 			}
 			ctx.fillRect(e.x, e.y, e.xSize, e.ySize);
 		});
-		requestAnimationFrame(updateAll);
-	}
-	
-	function createBackground() {
-		var background = document.createElement("canvas"),
-			ctx = background.getContext('2d'),
-			star;
-			
-		kogeki.dom.addClass(background, "background");
-		background.width = rect.width;
-		background.height = rect.height;
-		ctx.fillStyle = "rgb(0, 0, 0)";
-		ctx.fillRect(0, 0, rect.width, rect.height);
-		ctx.fillStyle = "rgb(250, 255, 200)";
-		stars.forEach(function(e) {
-			ctx.fillRect(e.x, e.y, 1, 1);
+		
+		blocks.forEach(function(e) {
+			ctx.fillStyle = "rgb(" + e.r + ", " + e.g + ", " + e.b + ")";
+			e.y = Math.floor(e.y + (e.speed * speedModifier * timeModifier));
+			ctx.fillRect(e.x, e.y, e.sizeX, e.sizeY);
 		});
-		return background;
+		
+		requestAnimationFrame(updateAll);
 	}
 
 	function generateRandom(min, max){
@@ -95,6 +108,30 @@ kogeki.screens["game-screen"] = (function() {
 				ySize: 1
 			} 
 		return star;
+	}
+	
+	function generateBlock() {
+		var sizeX = Math.floor(generateRandom(20, 50)),
+			sizeY = sizeX,
+			x = Math.floor(generateRandom(0, rect.width - sizeX)),
+			y = -sizeY,
+			speed = generateRandom(1, 6),
+			modifier, 
+			r = Math.floor(generateRandom(100, 255)),
+			g = Math.floor(generateRandom(100, 255)),
+			b = Math.floor(generateRandom(100, 255));
+		block = {
+			sizeX: sizeX,
+			sizeY: sizeY,
+			x: x,
+			y: y,
+			speed: speed,
+			modifier: modifier,
+			r: r,
+			g: g,
+			b: b
+		}
+		return block;	
 	}
 	
 	function run() {
