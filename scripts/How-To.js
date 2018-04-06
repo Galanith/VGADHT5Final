@@ -3,6 +3,8 @@ kogeki.screens["How-To"] = (function() {
 		firstRun = true;
 	
 	
+		
+	
 	function setup() {
 		
 		kogeki.dom.bind("#How-To .back", "click", function() {
@@ -12,6 +14,7 @@ kogeki.screens["How-To"] = (function() {
 		});
 		
 	}
+	
 	
 	function run () {
 		if (firstRun) {
