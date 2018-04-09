@@ -103,7 +103,7 @@ kogeki.screens["game-screen"] = (function() {
 		requestAnimationFrame(updateAll);
 	}
 	
-	/*function destroyBlock(relX, relY) {
+	function destroyBlock(relX, relY) {
 		if(arguments.length == 0) {
 			blocks.forEach(function(e) {
 			if(e.y == relY && e.y + e.height == relY) {
@@ -117,7 +117,7 @@ kogeki.screens["game-screen"] = (function() {
 		});
 		return;
 		}
-	} */
+	} 
 
 	function generateRandom(min, max){
 		return Math.random() * (max - min) + min;
@@ -165,6 +165,37 @@ kogeki.screens["game-screen"] = (function() {
 			b: b
 		}
 		return block;	
+	}
+	
+	function pauseGame(){
+		if(paused) {
+			return;
+		}
+		
+		paused = true;
+		var dom = kogeki.dom,
+			overlay = dom.$("#game-screen .pause-screen")[0];
+			overlay.style.display = "none";
+	}	
+	
+	function resumeGame() {
+		paused = false;
+		var dom = kogeki.dom,
+			overlay = dome.$("#game-screen .pause-screen")[0];
+			overlay.style.display = "none";
+	}
+	
+	function exitGame() {
+		pauseGame();
+		var confirmed = window.confirm(
+		"Running away HooMANS, Back to Main Menu?");
+		
+		if(confirmed) {
+			kogeki.showScreen("main-menu");
+		}
+		else {
+			resumeGame();
+		}
 	}
 	
 	function run() {
