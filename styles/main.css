@@ -73,12 +73,12 @@ body {
 	box-shadow: 10px -10px 10px #4000ff;
 }
 
-/*#Game-over {
+#Game-over {
 	font-family: Diagon;
 	background-color: rgb(0,0,0);
 	background-size: 100% 100%;
 	background-image: url(../images/gameOver.jpg);
-}*/
+}
 
 #How-To p {
 	font-family: Diagon;
@@ -86,7 +86,7 @@ body {
 	color: rgb(128,128,128);
 }
 
-/*.main-menu {
+.main-menu {
 	text-align: center;
 	font-family: Letterblocks;
 	font-size:0.6em;
@@ -100,7 +100,7 @@ body {
 .main-menu:active {
 	color: rgb(255,255,0);
 	background: rgb(30,40,0);
-}*/
+}
 
 .back{
 	text-align: center;
@@ -165,11 +165,51 @@ body {
 }
 
 #game-screen .play-area .playArea {
-	z-index: 10;
+	z-index: -10;
 }
 
 #game-screen .play-area .background {
 	z-index: 0;
+}
+#game-screen game-info {
+	width:100%;
+	float: left;
+}
+
+#game-screen .game-info label{
+	display: inline-block;
+	height:1.5em;
+	float: left;
+	font-size:0.6em;
+	padding: 0.25em;
+}
+
+#game-screen .game-info .score {
+	float: right;
+	z-index: 10;
+}
+#game-screen .pause-overlay {
+	display: none;
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100%;
+	height: 100%;
+	z-index: 100;
+	background: rgb(15,15,15);
+}
+
+
+#game-screen .pause-overlay .pause-text {
+	width: 100%;
+	text-align: center;
+	margin-top: 50%;
+	font-family: Slackey;
+	font-size: 1em;
+	text-shadow: 1px 1px 2px rgb(255,255,0),
+				-1px -1px 2px rgb(255,255,0), 
+				5px 8px 8px rgb(0,0,0);
+	color: rgb(70,120,20);
 }
 
 ul.menu {
