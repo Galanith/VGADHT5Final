@@ -42,6 +42,13 @@ kogeki.screens["game-screen"] = (function() {
 		input.initialize();
 		input.bind("destroyBlock", destroyBlock);
 	}
+	
+	/* function gameOver() {
+		setTimeout(function() {
+			kogeki.showScreen("game-over");
+		}, 5000);
+		
+	}*/
 
 	function updateAll() {
 		timeModifier = 1 + ((Date.now() - startTime) / 50000); 
