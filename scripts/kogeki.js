@@ -5,8 +5,11 @@ var kogeki = (function() {
 	executeRunning = false;
 	
 	var settings = {
-		
-	}
+		controls: {
+			CLICK: "destroyBlock",
+			TOUCH: "destroyBlock"
+		}
+	};
 	
 	function executeScriptQueue() {
 		var next = scriptQueue[0],
