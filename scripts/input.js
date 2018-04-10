@@ -7,13 +7,13 @@ kogeki.input = (function() {
 		controls = kogeki.settings.controls,
 		playArea = $("#game-screen .play-area")[0];
 		
-	inputHandlers = {};
-	dom.bind(playArea, "mousedown", function(event) {
-		handleClick(event, "CLICK", event);
-	});
-	dom.bind(playArea, "touchstart", function(event) {
-		handleClick(event, "TOUCH", event.targetTouches[0]);
-	});
+		inputHandlers = {};
+		dom.bind(playArea, "mousedown", function(event) {
+			handleClick(event, "CLICK", event);
+		});
+		dom.bind(playArea, "touchstart", function(event) {
+			handleClick(event, "TOUCH", event.targetTouches[0]);
+		});
 	}
 	
 	function bind(action, handler) {

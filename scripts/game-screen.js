@@ -9,6 +9,14 @@ kogeki.screens["game-screen"] = (function() {
 		buffs = [];
 		
 	function startGame() {
+		var display = kogeki.display;
+		
+		
+		gameState = {
+			score: 0
+		};
+		
+		UpdateGameInfo();
 		startTime = Date.now();
 		numBlocks = 10;
 		blocksCap = 10;
@@ -34,6 +42,12 @@ kogeki.screens["game-screen"] = (function() {
 		
 		playArea.appendChild(canvas);
 		requestAnimationFrame(updateAll);
+		
+		pause = false; 
+		
+		var dom = kogeki.dom,
+			overlay = dom.$("#game-screen .pause-screen")[0];
+			overlay.style.display = "none";
 	}
 	
 	function setup() {
@@ -44,13 +58,21 @@ kogeki.screens["game-screen"] = (function() {
 		input.initialize();
 		input.bind("destroyBlock", destroyBlock);
 	}
+<<<<<<< HEAD
+=======
 	
-	/* function gameOver() {
+	 function gameOver() {
 		setTimeout(function() {
 			kogeki.showScreen("game-over");
 		}, 5000);
 		
-	}*/
+	}
+	
+	function UpdateGameInfo() {
+		var $ = kogeki.dom.$;
+		$("#game-screen .score span") [0].innerHTML = gameState.score;
+	}
+>>>>>>> 0aea2f7fb76060bb327075b1ed9dc3be2a1628a4
 
 	function updateAll() {
 		//timeModifier = 1 + ((Date.now() - startTime) / 50000); 
@@ -156,7 +178,17 @@ kogeki.screens["game-screen"] = (function() {
 			}
 		}
 		return;
+		}
 	} 
+<<<<<<< HEAD
+=======
+	
+	function addScore(points) {
+		var settings = kogeki.settings;
+		
+		UpdateGameInfo();
+	}
+>>>>>>> 0aea2f7fb76060bb327075b1ed9dc3be2a1628a4
 
 	function generateRandom(min, max){
 		return Math.random() * (max - min) + min;
@@ -250,6 +282,37 @@ kogeki.screens["game-screen"] = (function() {
 			b: b
 		}
 		return block;	
+	}
+	
+	function pauseGame(){
+		if(paused) {
+			return;
+		}
+		
+		paused = true;
+		var dom = kogeki.dom,
+	overlay = dom.$("#game-screen .pause-screen}", "click")[0];
+			overlay.style.display = "block";
+	}	
+	
+	function resumeGame() {
+		paused = false;
+		var dom = kogeki.dom,
+			overlay = dome.$("#game-screen .pause-screen", "click")[0];
+			overlay.style.display = "none";
+	}
+	
+	function exitGame() {
+		pauseGame();
+		var confirmed = window.confirm(
+		"Running away HooMANS, Back to Main Menu?");
+		
+		if(confirmed) {
+			kogeki.showScreen("main-menu");
+		}
+		else {
+			resumeGame();
+		}
 	}
 	
 	function run() {
