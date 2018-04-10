@@ -2,11 +2,11 @@ kogeki.screens["game-screen"] = (function() {
 	var paused, blockSpeed,
 		speedModifier = 1, blocks = [],
 		firstRun = true,
-		rect, stars= [], startTime,
+		rect, stars = [], startTime,
 		numBlocks, spawnTimer,
 		lastBlock, timeModifier = 1,
-		blocksCap,
-		gameState;
+		blocksCap, forgiveArea,
+		buffs = [];
 		
 	function startGame() {
 		var display = kogeki.display;
@@ -23,6 +23,7 @@ kogeki.screens["game-screen"] = (function() {
 		spawnTimer = 700;
 		playerHealth = 10;
 		points = 0;
+		forgiveArea = 5;
 		lastBlock = Date.now();
 		var $ = kogeki.dom.$,
 		playArea = $("#game-screen .play-area")[0];
@@ -57,6 +58,8 @@ kogeki.screens["game-screen"] = (function() {
 		input.initialize();
 		input.bind("destroyBlock", destroyBlock);
 	}
+<<<<<<< HEAD
+=======
 	
 	 function gameOver() {
 		setTimeout(function() {
@@ -69,9 +72,10 @@ kogeki.screens["game-screen"] = (function() {
 		var $ = kogeki.dom.$;
 		$("#game-screen .score span") [0].innerHTML = gameState.score;
 	}
+>>>>>>> 0aea2f7fb76060bb327075b1ed9dc3be2a1628a4
 
 	function updateAll() {
-		timeModifier = 1 + ((Date.now() - startTime) / 50000); 
+		//timeModifier = 1 + ((Date.now() - startTime) / 50000); 
 		blocksCap = 10 + ((Date.now() - startTime) / 10000);
 		for(var i = 0; i < stars.length; i++) {
 			star = stars[i];
@@ -88,6 +92,16 @@ kogeki.screens["game-screen"] = (function() {
 			}
 		}
 		
+		for(i = 0; i < buffs.length; i++) {
+			if(Date.now() - buffs[i].startTime >= buffs[i].totalTime) {
+				if(buffs[i].isBuff == true) {
+					speedModifier += 0.5;
+				} else {
+					speedModifier -= 0.5;
+				}
+				buffs.splice(i, 1);
+			}
+		}
 		
 		
 		if(Date.now() - lastBlock >= spawnTimer && numBlocks < blocksCap) {
@@ -96,7 +110,6 @@ kogeki.screens["game-screen"] = (function() {
 			}
 			lastBlock = Date.now();
 			blocks.push(generateBlock());
-			console.log(spawnTimer);
 		}
 		
 		ctx.fillStyle = "rgb(0, 0, 0)";
@@ -116,7 +129,7 @@ kogeki.screens["game-screen"] = (function() {
 		
 		blocks.forEach(function(e) {
 			ctx.fillStyle = "rgb(" + e.r + ", " + e.g + ", " + e.b + ")";
-			e.y = Math.floor(e.y + (e.speed * speedModifier * timeModifier));
+			e.y = e.y + (e.speed * speedModifier * timeModifier);
 			ctx.fillRect(e.x, e.y, e.sizeX, e.sizeY);
 		});
 		
@@ -124,26 +137,58 @@ kogeki.screens["game-screen"] = (function() {
 	}
 	
 	function destroyBlock(relX, relY) {
-		if(arguments.length == 0) {
-			blocks.forEach(function(e) {
-			if(e.y == relY && e.y + e.height == relY) {
-					blocks.splice(e);
-					console.log("destroy");
+		if(arguments.length > 0) {
+			for(i = 0; i < blocks.length; i++) {
+				if(relY >= blocks[i].y - forgiveArea && relY <= blocks[i].sizeY + blocks[i].y + forgiveArea) {
+					if (relX >= blocks[i].x - forgiveArea && relX <= blocks[i].sizeX + blocks[i].x + forgiveArea) {
+						if(blocks[i].modifier) {
+							switch(blocks[i].modifier) {
+								case "speedUp":
+									blocks.splice(i, 1);
+									if(!isBuffActive(false)) {
+										buffs.push(generateBuff(10000, false));
+										console.log("Speed up!");
+									} else {
+										console.log("Buff already active!");
+									}
+									break;
+								case "slowDown":
+									blocks.splice(i, 1);
+									if(!isBuffActive(true)) {
+										buffs.push(generateBuff(10000, true));
+										console.log("Slow down!");
+									} else {
+										console.log("Buff already active!");
+									} 
+									break;
+								case "damage":
+									// Do damage
+									blocks.splice(i, 1);
+									break;
+								case "bomb":
+									blocks = [];
+									break;
+							}
+						} else {
+							blocks.splice(i, 1);
+							return;
+						}
+					}
 				} 
-			if (e.x == relX && e.x + e.width == relX) {
-				blocks.splice(e);
-				console.log("destroy");
 			}
-		});
+		}
 		return;
 		}
 	} 
+<<<<<<< HEAD
+=======
 	
 	function addScore(points) {
 		var settings = kogeki.settings;
 		
 		UpdateGameInfo();
 	}
+>>>>>>> 0aea2f7fb76060bb327075b1ed9dc3be2a1628a4
 
 	function generateRandom(min, max){
 		return Math.random() * (max - min) + min;
@@ -165,20 +210,66 @@ kogeki.screens["game-screen"] = (function() {
 				changeTime: generateRandom(2, 15),
 				xSize: 1,
 				ySize: 1
-			} 
+			}
 		return star;
 	}
 	
+	function generateBuff(totalTime, isBuff) {
+		var startTime = Date.now(),
+			totalTime = totalTime, 
+			isBuff = isBuff;
+		
+		if(isBuff) {
+			speedModifier -= 0.5;
+		} else {
+			speedModifier += 0.5;
+		}
+		buff = {
+			startTime: startTime,
+			totalTime: totalTime,
+			isBuff: isBuff
+		}
+		return buff;
+	}
+	
+	function isBuffActive(buff) {
+		for(i = 0; i < buffs.length; i++) {
+			if(buffs[i].isBuff == buff) {
+				return true;
+			}
+		}
+		return false;
+	}
+	
 	function generateBlock() {
-		var sizeX = Math.floor(generateRandom(20, 50)),
+		var sizeX = Math.floor(generateRandom(35, 50)),
 			sizeY = sizeX,
 			x = Math.floor(generateRandom(0, rect.width - sizeX)),
 			y = -sizeY,
-			speed = generateRandom(1, 6),
-			modifier, 
+			speed = generateRandom(1, 5),
+			modifier = "", 
 			r = Math.floor(generateRandom(100, 255)),
 			g = Math.floor(generateRandom(100, 255)),
 			b = Math.floor(generateRandom(100, 255));
+			if(generateRandom(1, 100) >= 90) {
+				var x = Math.floor(generateRandom(1, 5));
+				switch(x) {
+					case 1:
+						modifier += "speedUp";
+						break;
+					case 2:
+						modifier += "slowDown";
+						break;
+					case 3:
+						modifier += "damage";
+						break;
+					case 4:
+						modifier += "bomb";
+						break;
+				}
+				console.log("Modifier spawned of type: " + modifier);
+				speed = 1;
+			}
 		block = {
 			sizeX: sizeX,
 			sizeY: sizeY,
