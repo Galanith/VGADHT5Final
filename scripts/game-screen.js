@@ -200,14 +200,14 @@ kogeki.screens["game-screen"] = (function() {
 		
 		paused = true;
 		var dom = kogeki.dom,
-			overlay = dom.$("#game-screen .pause-screen")[0];
+	overlay = dom.$("#game-screen .pause-screen}", "click")[0];
 			overlay.style.display = "block";
 	}	
 	
 	function resumeGame() {
 		paused = false;
 		var dom = kogeki.dom,
-			overlay = dome.$("#game-screen .pause-screen")[0];
+			overlay = dome.$("#game-screen .pause-screen", "click")[0];
 			overlay.style.display = "none";
 	}
 	

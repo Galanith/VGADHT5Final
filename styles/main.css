@@ -211,6 +211,11 @@ body {
 				5px 8px 8px rgb(0,0,0);
 	color: rgb(70,120,20);
 }
+.pause {
+	text-align:left;
+	position:relative;
+	border-radius: 50%;
+}
 
 ul.menu {
 	text-align: center;
