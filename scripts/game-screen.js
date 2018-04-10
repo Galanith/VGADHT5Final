@@ -42,13 +42,6 @@ kogeki.screens["game-screen"] = (function() {
 		input.initialize();
 		input.bind("destroyBlock", destroyBlock);
 	}
-	
-	/* function gameOver() {
-		setTimeout(function() {
-			kogeki.showScreen("game-over");
-		}, 5000);
-		
-	}*/
 
 	function updateAll() {
 		timeModifier = 1 + ((Date.now() - startTime) / 50000); 
@@ -103,7 +96,7 @@ kogeki.screens["game-screen"] = (function() {
 		requestAnimationFrame(updateAll);
 	}
 	
-	/*function destroyBlock(relX, relY) {
+	function destroyBlock(relX, relY) {
 		if(arguments.length == 0) {
 			blocks.forEach(function(e) {
 			if(e.y == relY && e.y + e.height == relY) {
@@ -117,7 +110,7 @@ kogeki.screens["game-screen"] = (function() {
 		});
 		return;
 		}
-	} */
+	} 
 
 	function generateRandom(min, max){
 		return Math.random() * (max - min) + min;
