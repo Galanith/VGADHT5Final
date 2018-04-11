@@ -40,18 +40,21 @@ kogeki.screens["game-screen"] = (function() {
 		for(i = 0; i < generateRandom(45, 60); i++) {
 			stars.push(generateStar());
 		}
-		
-		playArea.appendChild(canvas);
-		requestAnimationFrame(updateAll);
-		
 		pause = false; 
 		
 		var dom = kogeki.dom,
 			overlay = dom.$("#game-screen .pause-screen")[0];
 			overlay.style.display = "none";
+			
+		playArea.appendChild(canvas);
+		requestAnimationFrame(updateAll);
+		
+		
 	}
 	
 	function setup() {
+		dom.bind("button.pause", "click", pauseGame);
+		dom.bind(".pause-screen", "click", resumeGame);	
 		var dom = kogeki.dom,
 			input = kogeki.input;
 		for(i = 0; i < 6; i++) {
@@ -66,6 +69,7 @@ kogeki.screens["game-screen"] = (function() {
 		input.initialize();
 		input.bind("destroyBlock", destroyBlock);
 	}
+
 	
 	 function gameOver() {
 		setTimeout(function() {
@@ -78,6 +82,8 @@ kogeki.screens["game-screen"] = (function() {
 		var $ = kogeki.dom.$;
 		$("#game-screen .score span") [0].innerHTML = gameState.score;
 	}
+
+
 
 	function updateAll() {
 		timeModifier = 1 + ((Date.now() - startTime) / 240000); 
@@ -208,6 +214,7 @@ kogeki.screens["game-screen"] = (function() {
 		}
 		scoreMultiplier = 1;
 		return;
+
 	}
 	
 	function addScore(points) {
@@ -215,6 +222,8 @@ kogeki.screens["game-screen"] = (function() {
 		gameState.score += points;
 		UpdateGameInfo();
 	}
+
+
 
 	function generateRandom(min, max){
 		return Math.random() * (max - min) + min;
@@ -317,15 +326,17 @@ kogeki.screens["game-screen"] = (function() {
 		
 		paused = true;
 		var dom = kogeki.dom,
-	overlay = dom.$("#game-screen .pause-screen", "click")[0];
+	overlay = dom.$("#game-screen .pause-screen")[0];
 			overlay.style.display = "block";
+		console.log("paused");
 	}	
 	
 	function resumeGame() {
 		paused = false;
 		var dom = kogeki.dom,
-			overlay = dome.$("#game-screen .pause-screen", "click")[0];
+			overlay = dome.$("#game-screen .pause-screen")[0];
 			overlay.style.display = "none";
+			console.log("unpaused");
 	}
 	
 	function exitGame() {
