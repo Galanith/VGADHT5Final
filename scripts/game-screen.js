@@ -53,8 +53,7 @@ kogeki.screens["game-screen"] = (function() {
 	}
 	
 	function setup() {
-		dom.bind("button.pause", "click", pauseGame);
-		dom.bind(".pause-screen", "click", resumeGame);	
+		
 		
 		var dom = kogeki.dom,
 			input = kogeki.input;
@@ -79,12 +78,7 @@ kogeki.screens["game-screen"] = (function() {
 			p = kogeki.getLoadProgress() * 100;
 			$(".health .indicator") [0].style.width = p + "%";
 			
-			if (p ==  100) {
-				setup();
-			}
-			else {
-				setTimeout(checkProgress, 30);
-			}	
+			
 		}
 	
 	 function gameOver() {
