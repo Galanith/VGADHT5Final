@@ -7,7 +7,8 @@ kogeki.screens["game-screen"] = (function() {
 		lastBlock, timeModifier = 1,
 		blocksCap, forgiveArea,
 		buffs = [], imageArray = [],
-		scoreMultiplier, buffIndicators;
+		scoreMultiplier, buffIndicators,
+		health, pauseTime;
 		
 	function startGame() {
 		var display = kogeki.display;
@@ -53,7 +54,8 @@ kogeki.screens["game-screen"] = (function() {
 	}
 	
 	function setup() {
-
+		var dom = kogeki.dom,
+			input = kogeki.input;
 		dom.bind("button.pause", "click", pauseGame);
 		dom.bind(".pause-screen", "click", resumeGame);
 		for(i = 0; i < 6; i++) {
@@ -109,8 +111,10 @@ kogeki.screens["game-screen"] = (function() {
 		
 		for(i = 0; i < blocks.length; i++) {
 			if(blocks[i].y > rect.height) {
+				if(!blocks[i].modifier) {
+					playerHealth--;
+				}
 				blocks.splice(i, 1);
-				playerHealth--;
 			}
 		}
 		
@@ -223,6 +227,7 @@ kogeki.screens["game-screen"] = (function() {
 									blocks.splice(i, 1);
 									break;
 								case "bomb":
+									addScore(blocks.length * 50);
 									blocks = [];
 									break;
 							}
@@ -295,6 +300,7 @@ kogeki.screens["game-screen"] = (function() {
 	function isBuffActive(buff) {
 		for(i = 0; i < buffs.length; i++) {
 			if(buffs[i].isBuff == buff) {
+				buffs[i].startTime = Date.now();
 				return true;
 			}
 		}
