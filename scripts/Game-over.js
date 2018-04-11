@@ -5,7 +5,7 @@ kogeki.screens["Game-over"] = (function() {
 	
 	function setup() {
 		
-		kogeki.dom.bind("#Game-Over .main-menu", "click", function() {
+		kogeki.dom.bind("#Game-over .main-menu", "click", function() {
 			kogeki.showScreen("main-menu");
 			
 		

@@ -75,9 +75,9 @@ kogeki.screens["game-screen"] = (function() {
 	
 	
 	 function gameOver() {
-		setTimeout(function() {
-			kogeki.showScreen("Game-over");
-		}, 5000);
+		kogeki.dom.bind(function() {
+			showScreen("Game-over");
+		});
 		
 	}
 	
