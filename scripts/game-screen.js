@@ -53,10 +53,13 @@ kogeki.screens["game-screen"] = (function() {
 	}
 	
 	function setup() {
+<<<<<<< HEAD
 		
 		
 		var dom = kogeki.dom,
 			input = kogeki.input;
+=======
+>>>>>>> f8410d0d824115c363e5af085ee9a76e16092e45
 
 		dom.bind("button.pause", "click", pauseGame);
 		dom.bind(".pause-screen", "click", resumeGame);
@@ -161,8 +164,22 @@ kogeki.screens["game-screen"] = (function() {
 		
 		for(i = 0; i < buffs.length; i++) {
 			if(buffs[i].isBuff == true) {
+				ctx.fillStyle = "rgb(0, 255, 0)";
+				ctx.beginPath();
+				ctx.arc(((i + 1) * 50) + 25, 35, 12, 0, 2 * Math.PI);
+				ctx.fill();
+				ctx.arc(((i + 1) * 50) + 25, 35, 22, 0, 2 * Math.PI * ((Date.now() - buffs[i].startTime) / buffs[i].totalTime));
+				ctx.lineTo(((i + 1) * 50) + 25, 35);
+				ctx.fill();
 				ctx.drawImage(imageArray[5], (i + 1) * 50, 10, 50, 50);
 			} else {
+				ctx.fillStyle = "rgb(255, 0, 0)";
+				ctx.beginPath();
+				ctx.arc(((i + 1) * 50) + 25, 30, 15, 0, 2 * Math.PI);
+				ctx.fill();
+				ctx.arc(((i + 1) * 50) + 25, 30, 24, 0, 2 * Math.PI * ((Date.now() - buffs[i].startTime) / buffs[i].totalTime));
+				ctx.lineTo(((i + 1) * 50) + 25, 30);
+				ctx.fill();
 				ctx.drawImage(imageArray[4], (i + 1) * 50, 5, 50, 50);
 			}
 			if(Date.now() - buffs[i].startTime >= buffs[i].totalTime) {
