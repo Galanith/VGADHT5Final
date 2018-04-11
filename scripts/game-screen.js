@@ -76,12 +76,7 @@ kogeki.screens["game-screen"] = (function() {
 			p = kogeki.getLoadProgress() * 100;
 			$(".health .indicator") [0].style.width = p + "%";
 			
-			if (p ==  100) {
-				setup();
-			}
-			else {
-				setTimeout(checkProgress, 30);
-			}	
+			
 		}
 	
 	 function gameOver() {

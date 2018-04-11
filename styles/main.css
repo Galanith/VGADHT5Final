@@ -35,6 +35,7 @@ body {
 
 #game .screen.active {
 	display : block;
+
 }
 
 #splash-screen{
@@ -118,11 +119,23 @@ body {
 	background: rgb(30,40,0);
 }
 
-.health {
+.health  {
 	margin: 0 auto;
+	margin-top: 115%;
 	width:5em;
 	height: 0.5em;
-	border
+	border: 1px solid rgb(153, 255, 102);
+	border-radius: 45%;
+	overflow:hidden;
+	
+	
+}
+.health .indicator {
+	background-color: rgb(255,0,0);
+	height: 100%;
+	width: 100%;
+	z-index:-10;
+	
 }
 
 .progress {
@@ -178,9 +191,10 @@ body {
 #game-screen .play-area .background {
 	z-index: 0;
 }
-#game-screen game-info {
+#game-screen .game-info {
 	width:100%;
-	float: left;
+	position: absolute;
+	
 }
 
 #game-screen .game-info label{
@@ -220,7 +234,7 @@ body {
 }
 .pause {
 	text-align:left;
-	position:relative;
+	position:absolute;
 	border-radius: 50%;
 }
 
