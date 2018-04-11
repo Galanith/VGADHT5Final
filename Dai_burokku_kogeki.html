@@ -12,13 +12,10 @@
 				kogeki.load("scripts/dom.js");
 				kogeki.load("scripts/splash-screen.js");
 				kogeki.load("scripts/main-menu.js");
-				kogeki.load("scripts/How-To.js", kogeki.setup);
+				kogeki.load("scripts/How-To.js");
 				kogeki.load("scripts/input.js");
-				
-			
 				kogeki.load("scripts/game-screen.js");
-				//kogeki.load("scripts/Game-over.js");
-				
+				kogeki.load("scripts/Game-over.js", kogeki.setup);
 			});
 		
 		</script>
@@ -91,18 +88,18 @@
 				
 				</footer>
 			</div>
-			<!--<div class="screen id="Game-over">
+			<div class="screen" id="game-over">
 				<header>
 				<h3> GAME OVER!!! </h3>
 				<br>
-				<p> YOU HAVE LET HUMANITY DOWN THEY HAVE WON <p>
+				<p> YOU HAVE LET HUMANITY DOWN THEY HAVE WON </p>
 				</header>
 				<footer>
 				<p> Click to go back to main menu </p>
 				<button class="main-menu"> Main Menu</button>
 				</footer>
 			
-			</div> -->
+			</div>
 		</div>
 	</body>
 	

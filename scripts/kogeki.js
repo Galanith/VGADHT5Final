@@ -85,8 +85,6 @@ var kogeki = (function() {
 		settings : settings,
 		screens : {},
 		getLoadProgress : getLoadProgress
-		
-		
 	};
 	
 	

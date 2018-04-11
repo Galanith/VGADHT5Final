@@ -7,7 +7,6 @@ kogeki.screens["game-screen"] = (function() {
 		lastBlock, timeModifier = 1,
 		blocksCap, forgiveArea,
 		buffs = [], imageArray = [],
-
 		scoreMultiplier, buffIndicators,
 		health, pauseTime;
 		
@@ -24,9 +23,10 @@ kogeki.screens["game-screen"] = (function() {
 		numBlocks = 10;
 		blocksCap = 10;
 		spawnTimer = 700;
-		playerHealth = 10;
+		playerHealth = 30;
 		points = 0;
 		forgiveArea = 5;
+		paused = false;
 		lastBlock = Date.now();
 		var $ = kogeki.dom.$,
 		playArea = $("#game-screen .play-area")[0];
@@ -50,8 +50,6 @@ kogeki.screens["game-screen"] = (function() {
 			
 		playArea.appendChild(canvas);
 		requestAnimationFrame(updateAll);
-		
-		
 	}
 	
 	function setup() {
@@ -75,10 +73,7 @@ kogeki.screens["game-screen"] = (function() {
 	
 	
 	 function gameOver() {
-		setTimeout(function() {
-			kogeki.showScreen("Game-over");
-		}, 5000);
-		
+		kogeki.showScreen("game-over");
 	}
 	
 	function UpdateGameInfo() {
@@ -89,102 +84,108 @@ kogeki.screens["game-screen"] = (function() {
 
 
 	function updateAll() {
-		timeModifier = 1 + ((Date.now() - startTime) / 240000); 
-		blocksCap = 10 + ((Date.now() - startTime) / 40000);
-		for(var i = 0; i < stars.length; i++) {
-			star = stars[i];
-			if(Date.now() - star.timeStart >= star.timeTotal) {
-				stars.splice(i, 1);
-				stars.push(generateStar());
-			}
-		}
-		
-		for(i = 0; i < blocks.length; i++) {
-			if(blocks[i].y > rect.height) {
-				if(!blocks[i].modifier) {
-					playerHealth--;
-				}
-				blocks.splice(i, 1);
-				$(".health .indicator") [0].style.width = p + "%";
-			}
-		}
-		
-		
-		if(Date.now() - lastBlock >= spawnTimer && numBlocks < blocksCap) {
-			if(spawnTimer > 300) {
-				spawnTimer -= 1;
-			}
-			lastBlock = Date.now();
-			blocks.push(generateBlock());
-		}
-		
-		ctx.fillStyle = "rgb(0, 0, 0)";
-		ctx.fillRect(0, 0, rect.width, rect.height);
-		ctx.fillStyle = "rgb(250, 255, 200)";
-		
-		stars.forEach(function(e) {
-			if(e.changeCount >= e.changeTime) {
-				e.changeCount = 0;
-				e.xSize = Math.floor(generateRandom(1, 3));
-				e.ySize = Math.floor(generateRandom(1, 3));
-			} else {
-				e.changeCount++;
-			}
-			ctx.fillRect(e.x, e.y, e.xSize, e.ySize);
-		});
-		
-		blocks.forEach(function(e) {
-			ctx.fillStyle = "rgb(" + e.r + ", " + e.g + ", " + e.b + ")";
-			e.y = e.y + (e.speed * speedModifier * timeModifier);
-			ctx.fillRect(e.x, e.y, e.sizeX, e.sizeY);
-			if(e.modifier) {
-				switch(e.modifier) {
-					case "slowDown":
-						ctx.drawImage(imageArray[0], e.x, e.y, e.sizeX, e.sizeY);
-						break;
-					case "speedUp":
-						ctx.drawImage(imageArray[1], e.x, e.y, e.sizeX, e.sizeY);
-						break;
-					case "damage":
-						ctx.drawImage(imageArray[2], e.x, e.y, e.sizeX, e.sizeY);
-						break;
-					case "bomb":
-						ctx.drawImage(imageArray[3], e.x, e.y, e.sizeX, e.sizeY);
-						break;
+		if(!paused) {
+			timeModifier = 1 + ((Date.now() - startTime) / 240000); 
+			blocksCap = 10 + ((Date.now() - startTime) / 40000);
+			for(var i = 0; i < stars.length; i++) {
+				star = stars[i];
+				if(Date.now() - star.timeStart >= star.timeTotal) {
+					stars.splice(i, 1);
+					stars.push(generateStar());
 				}
 			}
-		});
-		
-		for(i = 0; i < buffs.length; i++) {
-			if(buffs[i].isBuff == true) {
-				ctx.fillStyle = "rgb(0, 255, 0)";
-				ctx.beginPath();
-				ctx.arc(((i + 1) * 50) + 25, 35, 12, 0, 2 * Math.PI);
-				ctx.fill();
-				ctx.arc(((i + 1) * 50) + 25, 35, 22, 0, 2 * Math.PI * ((Date.now() - buffs[i].startTime) / buffs[i].totalTime));
-				ctx.lineTo(((i + 1) * 50) + 25, 35);
-				ctx.fill();
-				ctx.drawImage(imageArray[5], (i + 1) * 50, 10, 50, 50);
-			} else {
-				ctx.fillStyle = "rgb(255, 0, 0)";
-				ctx.beginPath();
-				ctx.arc(((i + 1) * 50) + 25, 30, 15, 0, 2 * Math.PI);
-				ctx.fill();
-				ctx.arc(((i + 1) * 50) + 25, 30, 24, 0, 2 * Math.PI * ((Date.now() - buffs[i].startTime) / buffs[i].totalTime));
-				ctx.lineTo(((i + 1) * 50) + 25, 30);
-				ctx.fill();
-				ctx.drawImage(imageArray[4], (i + 1) * 50, 5, 50, 50);
+			
+			for(i = 0; i < blocks.length; i++) {
+				if(blocks[i].y > rect.height) {
+					if(!blocks[i].modifier) {
+						playerHealth--;
+						if(playerHealth <= 0) {
+							paused = true;
+							gameOver();
+						}
+					}
+					blocks.splice(i, 1);
+					var $ = kogeki.dom.$;
+					$(".health .indicator") [0].style.width = Math.floor(playerHealth / 30 * 100) + "%";
+				}
 			}
-			if(Date.now() - buffs[i].startTime >= buffs[i].totalTime) {
-				if(buffs[i].isBuff == true) {
-					speedModifier += 0.5;
+			
+			
+			if(Date.now() - lastBlock >= spawnTimer && numBlocks < blocksCap) {
+				if(spawnTimer > 300) {
+					spawnTimer -= 1;
+				}
+				lastBlock = Date.now();
+				blocks.push(generateBlock());
+			}
+			
+			ctx.fillStyle = "rgb(0, 0, 0)";
+			ctx.fillRect(0, 0, rect.width, rect.height);
+			ctx.fillStyle = "rgb(250, 255, 200)";
+			
+			stars.forEach(function(e) {
+				if(e.changeCount >= e.changeTime) {
+					e.changeCount = 0;
+					e.xSize = Math.floor(generateRandom(1, 3));
+					e.ySize = Math.floor(generateRandom(1, 3));
 				} else {
-					speedModifier -= 0.5;
+					e.changeCount++;
 				}
-				buffs.splice(i, 1);
+				ctx.fillRect(e.x, e.y, e.xSize, e.ySize);
+			});
+			
+			blocks.forEach(function(e) {
+				ctx.fillStyle = "rgb(" + e.r + ", " + e.g + ", " + e.b + ")";
+				e.y = e.y + (e.speed * speedModifier * timeModifier);
+				ctx.fillRect(e.x, e.y, e.sizeX, e.sizeY);
+				if(e.modifier) {
+					switch(e.modifier) {
+						case "slowDown":
+							ctx.drawImage(imageArray[0], e.x, e.y, e.sizeX, e.sizeY);
+							break;
+						case "speedUp":
+							ctx.drawImage(imageArray[1], e.x, e.y, e.sizeX, e.sizeY);
+							break;
+						case "damage":
+							ctx.drawImage(imageArray[2], e.x, e.y, e.sizeX, e.sizeY);
+							break;
+						case "bomb":
+							ctx.drawImage(imageArray[3], e.x, e.y, e.sizeX, e.sizeY);
+							break;
+					}
+				}
+			});
+			
+			for(i = 0; i < buffs.length; i++) {
+				if(buffs[i].isBuff == true) {
+					ctx.fillStyle = "rgb(0, 255, 0)";
+					ctx.beginPath();
+					ctx.arc(((i + 1) * 50) + 25, 35, 12, 0, 2 * Math.PI);
+					ctx.fill();
+					ctx.arc(((i + 1) * 50) + 25, 35, 22, 0, 2 * Math.PI * ((Date.now() - buffs[i].startTime) / buffs[i].totalTime));
+					ctx.lineTo(((i + 1) * 50) + 25, 35);
+					ctx.fill();
+					ctx.drawImage(imageArray[5], (i + 1) * 50, 10, 50, 50);
+				} else {
+					ctx.fillStyle = "rgb(255, 0, 0)";
+					ctx.beginPath();
+					ctx.arc(((i + 1) * 50) + 25, 30, 15, 0, 2 * Math.PI);
+					ctx.fill();
+					ctx.arc(((i + 1) * 50) + 25, 30, 24, 0, 2 * Math.PI * ((Date.now() - buffs[i].startTime) / buffs[i].totalTime));
+					ctx.lineTo(((i + 1) * 50) + 25, 30);
+					ctx.fill();
+					ctx.drawImage(imageArray[4], (i + 1) * 50, 5, 50, 50);
+				}
+				if(Date.now() - buffs[i].startTime >= buffs[i].totalTime) {
+					if(buffs[i].isBuff == true) {
+						speedModifier += 0.5;
+					} else {
+						speedModifier -= 0.5;
+					}
+					buffs.splice(i, 1);
+				}
 			}
 		}
-		
 		requestAnimationFrame(updateAll);
 	}
 	
@@ -199,22 +200,25 @@ kogeki.screens["game-screen"] = (function() {
 									blocks.splice(i, 1);
 									if(!isBuffActive(false)) {
 										buffs.push(generateBuff(10000, false));
-										console.log("Speed up!");
 									} else {
-										console.log("Buff already active!");
 									}
 									break;
 								case "slowDown":
 									blocks.splice(i, 1);
 									if(!isBuffActive(true)) {
 										buffs.push(generateBuff(10000, true));
-										console.log("Slow down!");
 									} else {
-										console.log("Buff already active!");
 									} 
 									break;
 								case "damage":
-									// Do damage
+									console.log("Damage");
+									console.log(playerHealth);
+									playerHealth--;
+									console.log(playerHealth);
+									if(playerHealth <= 0) {
+										paused = true;
+										gameOver();
+									}
 									blocks.splice(i, 1);
 									break;
 								case "bomb":
@@ -299,7 +303,6 @@ kogeki.screens["game-screen"] = (function() {
 	}
 	
 	function generateBlock() {
-		console.log("Block generated");
 		var sizeX = Math.floor(generateRandom(35, 50)),
 			sizeY = sizeX,
 			x = Math.floor(generateRandom(0, rect.width - sizeX)),
@@ -324,7 +327,6 @@ kogeki.screens["game-screen"] = (function() {
 						modifier += "bomb";
 						break;
 				}
-				console.log("Modifier spawned of type: " + modifier);
 				speed = 1;
 			}
 		block = {
@@ -345,20 +347,19 @@ kogeki.screens["game-screen"] = (function() {
 		if(paused) {
 			return;
 		}
-		
+		pauseTime = Date.now();
 		paused = true;
 		var dom = kogeki.dom,
 			overlay = dom.$("#game-screen .pause-screen")[0];
 			overlay.style.display = "block";
-		console.log("paused");
 	}	
 	
 	function resumeGame() {
+		startTime += Date.now() - pauseTime;
 		paused = false;
 		var dom = kogeki.dom,
 			overlay = dom.$("#game-screen .pause-screen")[0];
 			overlay.style.display = "none";
-			console.log("unpaused");
 	}
 	
 	function exitGame() {
