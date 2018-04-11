@@ -188,7 +188,7 @@ body {
 	float: right;
 	z-index: 10;
 }
-#game-screen .pause-overlay {
+#game-screen .pause-screen {
 	display: none;
 	position: absolute;
 	left: 0;
@@ -200,7 +200,7 @@ body {
 }
 
 
-#game-screen .pause-overlay .pause-text {
+#game-screen .pause-screen .pause-text {
 	width: 100%;
 	text-align: center;
 	margin-top: 50%;

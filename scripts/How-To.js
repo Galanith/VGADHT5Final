@@ -12,7 +12,7 @@ kogeki.screens["How-To"] = (function() {
 			
 		
 		});
-		
+		console.log("pressed");
 	}
 	
 	
