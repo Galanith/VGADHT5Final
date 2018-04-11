@@ -134,7 +134,7 @@ body {
 	background-color: rgb(255,0,0);
 	height: 100%;
 	width: 100%;
-	z-index:-10;
+	
 	
 }
 
@@ -236,6 +236,7 @@ body {
 	text-align:left;
 	position:absolute;
 	border-radius: 50%;
+
 }
 
 .resume {

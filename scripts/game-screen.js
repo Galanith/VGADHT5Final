@@ -53,16 +53,11 @@ kogeki.screens["game-screen"] = (function() {
 	}
 	
 	function setup() {
-<<<<<<< HEAD
-		
-		
 		var dom = kogeki.dom,
 			input = kogeki.input;
-=======
->>>>>>> f8410d0d824115c363e5af085ee9a76e16092e45
-
 		dom.bind("button.pause", "click", pauseGame);
 		dom.bind(".pause-screen", "click", resumeGame);
+		
 		for(i = 0; i < 6; i++) {
 			imageArray[i] = new Image();
 		}
@@ -76,17 +71,10 @@ kogeki.screens["game-screen"] = (function() {
 		input.bind("destroyBlock", destroyBlock);
 	}
 	
-	function healthBar() {
-			var $ = kogeki.dom.$,
-			p = kogeki.getLoadProgress() * 100;
-			$(".health .indicator") [0].style.width = p + "%";
-			
-			
-		}
 	
 	 function gameOver() {
 		setTimeout(function() {
-			kogeki.showScreen("game-over");
+			kogeki.showScreen("Game-over");
 		}, 5000);
 		
 	}
@@ -113,6 +101,7 @@ kogeki.screens["game-screen"] = (function() {
 			if(blocks[i].y > rect.height) {
 				blocks.splice(i, 1);
 				playerHealth--;
+				$(".health .indicator") [0].style.width = p + "%";
 			}
 		}
 		
@@ -353,7 +342,7 @@ kogeki.screens["game-screen"] = (function() {
 		
 		paused = true;
 		var dom = kogeki.dom,
-	overlay = dom.$("#game-screen .pause-screen")[0];
+			overlay = dom.$("#game-screen .pause-screen")[0];
 			overlay.style.display = "block";
 		console.log("paused");
 	}	
