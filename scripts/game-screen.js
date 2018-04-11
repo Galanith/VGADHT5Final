@@ -6,7 +6,8 @@ kogeki.screens["game-screen"] = (function() {
 		numBlocks, spawnTimer,
 		lastBlock, timeModifier = 1,
 		blocksCap, forgiveArea,
-		buffs = [], imageArray = [];
+		buffs = [], imageArray = [],
+		scoreMultiplier, buffIndicators;
 		
 	function startGame() {
 		var display = kogeki.display;
@@ -15,7 +16,7 @@ kogeki.screens["game-screen"] = (function() {
 		gameState = {
 			score: 0
 		};
-		
+		scoreMultiplier = 1;
 		UpdateGameInfo();
 		startTime = Date.now();
 		numBlocks = 10;
@@ -53,13 +54,15 @@ kogeki.screens["game-screen"] = (function() {
 	function setup() {
 		var dom = kogeki.dom,
 			input = kogeki.input;
-		for(i = 0; i < 4; i++) {
+		for(i = 0; i < 6; i++) {
 			imageArray[i] = new Image();
 		}
 		imageArray[0].src = "images/hourglass.png ";
 		imageArray[1].src = "images/scoreup.png";
 		imageArray[2].src = "images/damage.png";
 		imageArray[3].src = "images/bomb.png";
+		imageArray[4].src = "images/x2.png";
+		imageArray[5].src = "images/slow.png";
 		input.initialize();
 		input.bind("destroyBlock", destroyBlock);
 	}
@@ -91,17 +94,6 @@ kogeki.screens["game-screen"] = (function() {
 			if(blocks[i].y > rect.height) {
 				blocks.splice(i, 1);
 				playerHealth--;
-			}
-		}
-		
-		for(i = 0; i < buffs.length; i++) {
-			if(Date.now() - buffs[i].startTime >= buffs[i].totalTime) {
-				if(buffs[i].isBuff == true) {
-					speedModifier += 0.5;
-				} else {
-					speedModifier -= 0.5;
-				}
-				buffs.splice(i, 1);
 			}
 		}
 		
@@ -151,6 +143,22 @@ kogeki.screens["game-screen"] = (function() {
 			}
 		});
 		
+		for(i = 0; i < buffs.length; i++) {
+			if(buffs[i].isBuff == true) {
+				ctx.drawImage(imageArray[5], (i + 1) * 50, 10, 50, 50);
+			} else {
+				ctx.drawImage(imageArray[4], (i + 1) * 50, 5, 50, 50);
+			}
+			if(Date.now() - buffs[i].startTime >= buffs[i].totalTime) {
+				if(buffs[i].isBuff == true) {
+					speedModifier += 0.5;
+				} else {
+					speedModifier -= 0.5;
+				}
+				buffs.splice(i, 1);
+			}
+		}
+		
 		requestAnimationFrame(updateAll);
 	}
 	
@@ -187,15 +195,18 @@ kogeki.screens["game-screen"] = (function() {
 									blocks = [];
 									break;
 							}
+							return;
 						} else {
 							blocks.splice(i, 1);
-							addScore(100);
+							addScore(100 * scoreMultiplier);
+							scoreMultiplier += 0.1;
 							return;
 						}
 					}
 				} 
 			}
 		}
+		scoreMultiplier = 1;
 		return;
 	}
 	
@@ -242,7 +253,7 @@ kogeki.screens["game-screen"] = (function() {
 		buff = {
 			startTime: startTime,
 			totalTime: totalTime,
-			isBuff: isBuff
+			isBuff: isBuff,
 		}
 		return buff;
 	}
