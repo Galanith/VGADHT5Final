@@ -1,13 +1,13 @@
 kogeki.screens["game-screen"] = (function() {
-	var paused, blockSpeed,
-		speedModifier = 1, blocks = [],
+	var paused, lastFrame = 0,
+		speedModifier, blocks,
 		firstRun = true,
-		rect, stars = [], startTime,
+		rect, stars, startTime,
 		numBlocks, spawnTimer,
-		lastBlock, timeModifier = 1,
+		lastBlock, timeModifier,
 		blocksCap, forgiveArea,
-		buffs = [], imageArray = [],
-		scoreMultiplier, buffIndicators,
+		buffs, imageArray = [],
+		scoreMultiplier,
 		health, pauseTime;
 		
 	function startGame() {
@@ -17,6 +17,8 @@ kogeki.screens["game-screen"] = (function() {
 		gameState = {
 			score: 0
 		};
+		blocks = [];
+		buffs = []
 		scoreMultiplier = 1;
 		UpdateGameInfo();
 		startTime = Date.now();
@@ -28,8 +30,14 @@ kogeki.screens["game-screen"] = (function() {
 		forgiveArea = 5;
 		paused = false;
 		lastBlock = Date.now();
+		paused = false;
+		stars = [];
+		speedModifier = 1;
+		timeModifier = 1;
+		lastFrame = Date.now();
 		var $ = kogeki.dom.$,
 		playArea = $("#game-screen .play-area")[0];
+		$(".health .indicator") [0].style.width = Math.floor(playerHealth / 30 * 100) + "%";
 		
 		canvas = document.createElement("canvas");
 		ctx = canvas.getContext('2d');
@@ -42,7 +50,6 @@ kogeki.screens["game-screen"] = (function() {
 		for(i = 0; i < generateRandom(45, 60); i++) {
 			stars.push(generateStar());
 		}
-		pause = false; 
 		
 		var dom = kogeki.dom,
 			overlay = dom.$("#game-screen .pause-screen")[0];
@@ -84,6 +91,8 @@ kogeki.screens["game-screen"] = (function() {
 
 
 	function updateAll() {
+		console.log("Time since last frame: " + (Date.now() - lastFrame));
+		lastFrame = Date.now();
 		if(!paused) {
 			timeModifier = 1 + ((Date.now() - startTime) / 240000); 
 			blocksCap = 10 + ((Date.now() - startTime) / 40000);
@@ -104,6 +113,7 @@ kogeki.screens["game-screen"] = (function() {
 						if(playerHealth <= 0) {
 							paused = true;
 							gameOver();
+							return;
 						}
 					}
 					blocks.splice(i, 1);
@@ -138,7 +148,7 @@ kogeki.screens["game-screen"] = (function() {
 			
 			blocks.forEach(function(e) {
 				ctx.fillStyle = "rgb(" + e.r + ", " + e.g + ", " + e.b + ")";
-				e.y = e.y + (e.speed * speedModifier * timeModifier);
+				e.y += (e.speed * speedModifier * timeModifier);
 				ctx.fillRect(e.x, e.y, e.sizeX, e.sizeY);
 				if(e.modifier) {
 					switch(e.modifier) {
@@ -191,7 +201,7 @@ kogeki.screens["game-screen"] = (function() {
 		requestAnimationFrame(updateAll);
 	}
 	
-	function destroyBlock(relX, relY) {
+	function destroyBlock(relX, relY) { 
 		if(arguments.length > 0) {
 			for(i = 0; i < blocks.length; i++) {
 				if(relY >= blocks[i].y - forgiveArea && relY <= blocks[i].sizeY + blocks[i].y + forgiveArea) {

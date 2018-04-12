@@ -52,9 +52,8 @@ body {
 
 #How-To {
 	text-align: center;
-	padding-top:20px;
+	padding-top: 0px;
 	padding-bottom: 30px;
-	
 }
 
 #How-To p {
@@ -62,6 +61,7 @@ body {
 	font-size: 0.4em;
 	color: rgb(128,128,128);
 }
+
 #How-To .BL img {
 	-moz-box-shadow:0 -10px 10px #4000ff;
 	-webkit-box-shadow:0 -10px 10px #4000ff;
@@ -79,6 +79,36 @@ body {
 	background-color: rgb(0,0,0);
 	background-size: 100% 100%;
 	background-image: url(../images/gameOver.jpg);
+}
+
+#game-over h3 {
+	font-family: Diagon;
+	color: rgb(0,0,255);
+	text-shadow:1px 1px 3px rgb(200,255,200),
+				-1px -1px 3px rgb(200,255,200),
+				5px 8px 8px rgb(0,0,0);
+	text-align: center;
+	font-size: 50px;
+}
+
+#game-over p {
+	font-family: Diagon;
+	text-align: center;
+	text-shadow:1px 1px 3px rgb(200,255,200),
+				-1px -1px 3px rgb(200,255,200),
+				5px 8px 8px rgb(0,0,0);
+	color: rgb(0,0,255);
+	font-size: 45px;
+}
+
+#game-over button {
+	text-align: center;
+	margin-left: 35%;
+	font-family: Diagon;
+	font-size:0.6em;
+	color: rgba(249, 155, 3, 1);
+	background-color: black;
+	border: 1px solid rgb(150, 200, 100);
 }
 
 #How-To p {
