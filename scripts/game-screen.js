@@ -99,6 +99,8 @@ kogeki.screens["game-screen"] = (function() {
 				if(blocks[i].y > rect.height) {
 					if(!blocks[i].modifier) {
 						playerHealth--;
+						kogeki.gameAudio.damage.currentTime = 0;
+						kogeki.gameAudio.damage.play();
 						if(playerHealth <= 0) {
 							paused = true;
 							gameOver();
@@ -349,6 +351,7 @@ kogeki.screens["game-screen"] = (function() {
 		}
 		pauseTime = Date.now();
 		paused = true;
+		kogeki.gameAudio.level_bgm.pause();
 		var dom = kogeki.dom,
 			overlay = dom.$("#game-screen .pause-screen")[0];
 			overlay.style.display = "block";
@@ -357,6 +360,7 @@ kogeki.screens["game-screen"] = (function() {
 	function resumeGame() {
 		startTime += Date.now() - pauseTime;
 		paused = false;
+		kogeki.gameAudio.level_bgm.play();
 		var dom = kogeki.dom,
 			overlay = dom.$("#game-screen .pause-screen")[0];
 			overlay.style.display = "none";
@@ -378,6 +382,9 @@ kogeki.screens["game-screen"] = (function() {
 	function run() {
 		if (firstRun) {
 			setup();
+			kogeki.gameAudio.menu_bgm.pause();
+			kogeki.gameAudio.level_bgm.currentTime = 0;
+			kogeki.gameAudio.level_bgm.play();
 			firstRun = false;
 		}
 		startGame();
