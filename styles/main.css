@@ -81,6 +81,36 @@ body {
 	background-image: url(../images/gameOver.jpg);
 }
 
+#game-over h3 {
+	font-family: Diagon;
+	color: rgb(0,0,255);
+	text-shadow:1px 1px 3px rgb(200,255,200),
+				-1px -1px 3px rgb(200,255,200),
+				5px 8px 8px rgb(0,0,0);
+	text-align: center;
+	font-size: 50px;
+}
+
+#game-over p {
+	font-family: Diagon;
+	text-align: center;
+	text-shadow:1px 1px 3px rgb(200,255,200),
+				-1px -1px 3px rgb(200,255,200),
+				5px 8px 8px rgb(0,0,0);
+	color: rgb(0,0,255);
+	font-size: 45px;
+}
+
+#game-over button {
+	text-align: center;
+	margin-left: 35%;
+	font-family: Diagon;
+	font-size:0.6em;
+	color: rgba(249, 155, 3, 1);
+	background-color: black;
+	border: 1px solid rgb(150, 200, 100);
+}
+
 #How-To p {
 	font-family: Diagon;
 	font-size: 0.4em;
