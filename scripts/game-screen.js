@@ -55,6 +55,8 @@ kogeki.screens["game-screen"] = (function() {
 			overlay = dom.$("#game-screen .pause-screen")[0];
 			overlay.style.display = "none";
 			
+		
+			
 		playArea.appendChild(canvas);
 		requestAnimationFrame(updateAll);
 	}
@@ -64,6 +66,7 @@ kogeki.screens["game-screen"] = (function() {
 			input = kogeki.input;
 		dom.bind("button.pause", "click", pauseGame);
 		dom.bind(".pause-screen", "click", resumeGame);
+		
 		
 		for(i = 0; i < 6; i++) {
 			imageArray[i] = new Image();
@@ -380,6 +383,10 @@ kogeki.screens["game-screen"] = (function() {
 		pauseGame();
 		var confirmed = window.confirm(
 		"Running away HooMANS, Back to Main Menu?");
+		
+		var dom = kogeki.dom,
+			overlay  = dom.$("#pause-screen .exitGame") [0];
+			overlay.style.display = "none";
 		
 		if(confirmed) {
 			kogeki.showScreen("main-menu");

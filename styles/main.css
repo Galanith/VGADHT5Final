@@ -254,7 +254,6 @@ body {
 #game-screen .pause-screen .pause-text {
 	width: 100%;
 	text-align: center;
-	margin-top: 20%;
 	font-family: Diagon;
 	font-size: 1em;
 	text-shadow: 1px 1px 2px rgb(255,255,0),
