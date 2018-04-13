@@ -6,6 +6,7 @@ var kogeki = (function() {
 	
 	var settings = {
 		baseScore: 100,
+		scoreMultiplier: 1,
 		controls: {
 			CLICK: "destroyBlock",
 			TOUCH: "destroyBlock"

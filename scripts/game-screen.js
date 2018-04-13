@@ -66,6 +66,7 @@ kogeki.screens["game-screen"] = (function() {
 			input = kogeki.input;
 		dom.bind("button.pause", "click", pauseGame);
 		dom.bind(".pause-screen .resume", "click", resumeGame);
+		dom.bind(".pause-screen .exitGame", "click", exitGame);
 		
 		
 		for(i = 0; i < 6; i++) {
@@ -384,12 +385,10 @@ kogeki.screens["game-screen"] = (function() {
 		var confirmed = window.confirm(
 		"Running away HooMANS, Back to Main Menu?");
 		
-		var dom = kogeki.dom,
-			overlay  = dom.$("#pause-screen .exitGame") [0];
-			overlay.style.display = "none";
 		
 		if(confirmed) {
 			kogeki.showScreen("main-menu");
+			
 		}
 		else {
 			resumeGame();

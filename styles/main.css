@@ -229,7 +229,7 @@ body {
 
 #game-screen .game-info label{
 	display: inline-block;
-	height:1.5em;
+	height:1em;
 	float: left;
 	font-size:0.6em;
 	padding: 0.25em;
@@ -237,6 +237,11 @@ body {
 
 #game-screen .game-info .score {
 	float: right;
+	z-index: 10;
+}
+
+#game-screen .game-info .multi {
+	float:right;
 	z-index: 10;
 }
 #game-screen .pause-screen {
