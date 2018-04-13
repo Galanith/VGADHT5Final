@@ -96,8 +96,11 @@ kogeki.screens["game-screen"] = (function() {
 	// Updates the score text to show the players current game score
 	
 	function UpdateGameInfo() {
-		var $ = kogeki.dom.$;
+		var $ = kogeki.dom.$,
+			multiData;
+		multiData = scoreMultiplier.toFixed(2);
 		$("#game-screen .score span") [0].innerHTML = gameState.score;
+		$("#game-screen .multi span") [0].innerHTML = multiData;
 	}
 
 	// The muscle behind the game, updates position of all entities and runs any necessary logic
@@ -249,6 +252,7 @@ kogeki.screens["game-screen"] = (function() {
 									break;
 								case "bomb":
 									addScore(blocks.length * 50);
+									UpdateGameInfo();
 									blocks = [];
 									break;
 							}
@@ -257,6 +261,7 @@ kogeki.screens["game-screen"] = (function() {
 							blocks.splice(i, 1);
 							addScore(100 * scoreMultiplier);
 							scoreMultiplier += 0.1;
+							UpdateGameInfo();
 							return;
 						}
 					}
@@ -264,6 +269,7 @@ kogeki.screens["game-screen"] = (function() {
 			}
 		}
 		scoreMultiplier = 1;
+		UpdateGameInfo();
 		return;
 
 	}
@@ -273,7 +279,6 @@ kogeki.screens["game-screen"] = (function() {
 	function addScore(points) {
 		var settings = kogeki.settings;
 		gameState.score += points;
-		UpdateGameInfo();
 	}
 
 	// Function to generate a number between two values
