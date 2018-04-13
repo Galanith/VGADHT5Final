@@ -12,6 +12,8 @@ var kogeki = (function() {
 		}
 	};
 	
+	var gameAudio = {};
+	
 	function executeScriptQueue() {
 		var next = scriptQueue[0],
 		first, script;
@@ -56,12 +58,19 @@ var kogeki = (function() {
 		image.src = src;
 	}
 	
+	
+	
 	function getLoadProgress() {
 		return numResourcesLoaded / numResources;
 	}
 	
 	function setup() {
 		kogeki.showScreen("splash-screen");
+		gameAudio.damage = document.getElementById("damage");
+		gameAudio.button_press = document.getElementById("button_press");
+		gameAudio.button_hover = document.getElementById("button_hover");
+		gameAudio.menu_bgm = document.getElementById("menu_bgm");
+		gameAudio.level_bgm = document.getElementById("level_bgm");
 	}
 	
 	function showScreen(screenID) {
@@ -69,6 +78,7 @@ var kogeki = (function() {
 		$ = dom.$,
 		activeScreen = $("#game .screen.active")[0],
 		screen = $("#" + screenID)[0];
+		
 		
 		if (activeScreen) {
 			dom.removeClass(activeScreen, "active");
@@ -83,6 +93,7 @@ var kogeki = (function() {
 		setup : setup,
 		showScreen : showScreen,
 		settings : settings,
+		gameAudio: gameAudio,
 		screens : {},
 		getLoadProgress : getLoadProgress
 	};
