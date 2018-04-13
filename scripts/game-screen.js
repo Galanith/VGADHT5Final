@@ -65,7 +65,7 @@ kogeki.screens["game-screen"] = (function() {
 		var dom = kogeki.dom,
 			input = kogeki.input;
 		dom.bind("button.pause", "click", pauseGame);
-		dom.bind(".pause-screen", "click", resumeGame);
+		dom.bind(".pause-screen .resume", "click", resumeGame);
 		
 		
 		for(i = 0; i < 6; i++) {
