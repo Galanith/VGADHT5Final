@@ -10,6 +10,9 @@ kogeki.screens["game-screen"] = (function() {
 		scoreMultiplier,
 		health, pauseTime;
 		
+		
+	// Resets any necessary variables and creates any required objects (Such as the canvas)
+	
 	function startGame() {
 		var display = kogeki.display;
 		
@@ -59,6 +62,8 @@ kogeki.screens["game-screen"] = (function() {
 		requestAnimationFrame(updateAll);
 	}
 	
+	// Sets up necessary bindings as well as loads images for use in buffs
+	
 	function setup() {
 		var dom = kogeki.dom,
 			input = kogeki.input;
@@ -78,17 +83,20 @@ kogeki.screens["game-screen"] = (function() {
 		input.bind("destroyBlock", destroyBlock);
 	}
 	
+	// Presents the player with the game over screen
 	
 	 function gameOver() {
 		kogeki.showScreen("game-over");
 	}
+	
+	// Updates the score text to show the players current game score
 	
 	function UpdateGameInfo() {
 		var $ = kogeki.dom.$;
 		$("#game-screen .score span") [0].innerHTML = gameState.score;
 	}
 
-
+	// The muscle behind the game, updates position of all entities and runs any necessary logic
 
 	function updateAll() {
 		console.log("Time since last frame: " + (Date.now() - lastFrame));
@@ -201,6 +209,8 @@ kogeki.screens["game-screen"] = (function() {
 		requestAnimationFrame(updateAll);
 	}
 	
+	// Checks if each block contains the touch coordinates and applies any effects it might have such as a buff or score increase.
+	
 	function destroyBlock(relX, relY) { 
 		if(arguments.length > 0) {
 			for(i = 0; i < blocks.length; i++) {
@@ -254,17 +264,21 @@ kogeki.screens["game-screen"] = (function() {
 
 	}
 	
+	// Adds score to the score counter and updates the game info
+	
 	function addScore(points) {
 		var settings = kogeki.settings;
 		gameState.score += points;
 		UpdateGameInfo();
 	}
 
-
+	// Function to generate a number between two values
 
 	function generateRandom(min, max){
 		return Math.random() * (max - min) + min;
 	}
+	
+	// Generates a star for the background, providing a random position, life time and flicker time
 	
 	function generateStar() {
 		var x = generateRandom(0, rect.width),
@@ -286,6 +300,8 @@ kogeki.screens["game-screen"] = (function() {
 		return star;
 	}
 	
+	// Identifies what type of buff is pressed and applies the affects of it
+	
 	function generateBuff(totalTime, isBuff) {
 		var startTime = Date.now(),
 			totalTime = totalTime, 
@@ -304,6 +320,8 @@ kogeki.screens["game-screen"] = (function() {
 		return buff;
 	}
 	
+	// Checks if the buff type that is taken in is already in affect or not, if it is it resets the timer
+	
 	function isBuffActive(buff) {
 		for(i = 0; i < buffs.length; i++) {
 			if(buffs[i].isBuff == buff) {
@@ -313,6 +331,8 @@ kogeki.screens["game-screen"] = (function() {
 		}
 		return false;
 	}
+	
+	// Generates a block with a random colour, size, speed, position and determines if it should have a modifier and what type.
 	
 	function generateBlock() {
 		var sizeX = Math.floor(generateRandom(35, 50)),
@@ -355,6 +375,8 @@ kogeki.screens["game-screen"] = (function() {
 		return block;	
 	}
 	
+	// Sets the pause boolean to true and presents the pause screen.
+	
 	function pauseGame(){
 		if(paused) {
 			return;
@@ -367,6 +389,8 @@ kogeki.screens["game-screen"] = (function() {
 			overlay.style.display = "block";
 	}	
 	
+	// Sets the pause boolean to false and returns the player to the game screen.
+	
 	function resumeGame() {
 		startTime += Date.now() - pauseTime;
 		paused = false;
@@ -375,6 +399,8 @@ kogeki.screens["game-screen"] = (function() {
 			overlay = dom.$("#game-screen .pause-screen")[0];
 			overlay.style.display = "none";
 	}
+	
+	// Exits the game ? Is this in use?
 	
 	function exitGame() {
 		pauseGame();
@@ -388,6 +414,8 @@ kogeki.screens["game-screen"] = (function() {
 			resumeGame();
 		}
 	}
+	
+	// Run whenever the game screen becomes active
 	
 	function run() {
 		if (firstRun) {
