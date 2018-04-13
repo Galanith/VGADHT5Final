@@ -54,25 +54,29 @@ body {
 	text-align: center;
 	padding-top: 0px;
 	padding-bottom: 30px;
+	font-size: 17px;
 }
 
 #How-To p {
 	font-family: Diagon;
-	font-size: 0.4em;
-	color: rgb(128,128,128);
+	color: rgb(255,90,0);
+	background-color: rgba(0,255,255,0.7);
 }
 
 #How-To .BL img {
-	-moz-box-shadow:0 -10px 10px #4000ff;
-	-webkit-box-shadow:0 -10px 10px #4000ff;
-	box-shadow: 0 -10px 10px #4000ff;
+	-moz-box-shadow:0 0 91px #4000ff;
+	-webkit-box-shadow:0 0 91px #4000ff;
+	box-shadow: 0 0 91px #4000ff;
+}
+#How-To .HTI {
+	background-color: rgba(0,255,255,0.7);
+	border-radius: 20%;
+	padding-top:13px;
+}
+#How-To .HTI p {
+	background-color:rgba(0,0,0,0);
 }
 
-#How-To .HTI img {
-	-moz-box-shadow:10px -10px 10px #4000ff;
-	-webkit-box-shadow: 10px -10px 10px #4000ff;
-	box-shadow: 10px -10px 10px #4000ff;
-}
 
 #game-over {
 	font-family: Diagon;
@@ -111,11 +115,7 @@ body {
 	border: 1px solid rgb(150, 200, 100);
 }
 
-#How-To p {
-	font-family: Diagon;
-	font-size: 0.4em;
-	color: rgb(128,128,128);
-}
+
 
 .main-menu {
 	text-align: center;
